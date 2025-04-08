@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Портфолио</title>
+  
+  <!-- Подключение шрифта Benzin и второго шрифта Manrope -->
+  <style>
+    @font-face {
+      font-family: 'Benzin';
+      src: url('benzin-bold.otf') format('opentype');
+      font-weight: bold;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Seratti';
+      src: url('ofont.ru_Cruinn.woff') format('woff'),
+      font-weight: normal;
+      font-style: normal;
+    }
+
+
+    body {
+      margin: 0;
+      font-family: 'Seratti', sans-serif;
+      background: linear-gradient(135deg, #2c2c2c, #3f3f3f);
+      color: #f5f5f5;
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -100px;
+      left: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, #ffdd00 0%, transparent 70%);
+      z-index: 0;
+      filter: blur(120px);
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -100px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, #ffdd00 0%, transparent 70%);
+      z-index: 0;
+      filter: blur(100px);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1, h2 {
+      text-align: center;
+      font-family: 'Benzin', sans-serif;
+      color: #ffe100;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    p, li {
+      font-size: 1.1rem;
+      color: #f5f5f5;
+      background-color: rgba(0, 0, 0, 0.2); /* черный фон с прозрачностью */
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+      border-radius: 10px;
+      padding: 1rem;
+      text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5); /* тень на тексте */
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    .post {
+      background: #1c1c1c;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .post img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 2px solid #ffe10044;
+    }
+
+    .post a {
+      display: inline-block;
+      margin-top: 0.75rem;
+      color: #ffe100;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .contact {
+      text-align: center;
+    }
+
+    .contact a {
+      color: #ffe100;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+      .posts-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* чтобы растягивались */
+    gap: 10px;
+    padding: 2rem; /* или меньше, если мешает */
+    width: 100%;
+    max-width: none;
+  }
+
+
+    .post {
+    width: calc(50% - 15px); /* два поста в строку */
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+    transition: transform 0.2s ease;
+    transform: scale(0.9);
+    transform-origin: center;
+    max-width: none;
+  }
+
+    .post img {
+    max-width: 100%;
+    max-height: 500px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 2px solid #ffe10044;
+  }
+
+  .post:hover {
+    transform: scale(1);
+  }
+
+
+
+  
+  /* Мобильный стиль (если хочешь сделать адаптивность) */
+  @media (max-width: 768px) {
+    .post {
+      flex: 0 0 100%;
+    }
+  }
+
+    .carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+    margin-top: 2rem;
+  }
+
+  .carousel {
+    width: 100%;
+    max-width: 600px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.4s ease;
+  }
+
+    .carousel .post {
+    min-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 14px;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+  }
+
+    .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 5rem;
+    color: #ffe100;
+    font-weight: bold;
+    padding: 0.3rem 0.8rem;
+    user-select: none;
+    transition: transform 0.2s ease;
+  }
+
+    .carousel-btn:hover {
+    transform: translateY(-50%) scale(1.2);
+    color: #ffef4a;
+  }
+
+  .carousel-btn.prev {
+    left: 0;
+  }
+
+  .carousel-btn.next {
+    right: 0;
+  }
+
+  .modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #1c1c1c;
+  padding: 1rem;
+  border-radius: 12px;
+  max-width: 90%;
+  max-height: 90%;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.modal-content img {
+  max-width: 100%;
+  max-height: 100vh; /* увеличиваем максимальную высоту картинки */
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  border: 2px solid #ffe10088;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.modal-buttons a {
+  background-color: #ffe100;
+  color: #000;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'Benzin', sans-serif;
+  transition: background 0.2s ease;
+}
+
+.modal-buttons a:hover {
+  background-color: #e0c600;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Кнопки под картинкой в модалке */
+.modal-btns {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.modal-btns button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #ffe100;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.6); /* немного затемнённый фон для кнопок */
+}
+
+.modal-btns button:hover {
+  transform: scale(1.1);
+  color: #ffef4a;
+}
+
+.modal-btns .btn-left {
+  position: absolute;
+  left: 10%;
+}
+
+.modal-btns .btn-right {
+  position: absolute;
+  right: 10%;
+
+}
+
+.center-text {
+  text-align: center;
+  color: #fff;
+}
+
+.text-large {
+  font-size: 1.2rem;
+}
+
+.text-small {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.center-text2 {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.text-svet {
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+}
+
+
+
+</style>
+
+  </style>
+</head>
+<body>
+  <div class="content">
+    <header>
+      <h1 class="text-svet">МИХАИЛ</h1>
+      <p class = "center-text2">Автор креативных постов для Telegram</p>
+    </header>
+
+    <div class="section">
+      <h2 class="text-svet">О СЕБЕ</h2>
+      <p>Я пишу креативные, живые и вовлекающие тексты для Telegram-каналов. Если вам нужен стильный, нестандартный пост — я тот, кто справится. Умею в сторителлинг, структуру, нативную рекламу и читаемый текст, который не пролистывают. Сейчас открываю предложения на коммерческие интеграции — готов делать рекламные посты, а не только авторские.</p>
+      <p class = "center-text2" >Все изображения для постов — это моя собственная работа, созданная в Photoshop.</p>
+    </div>
+
+    <div class="section">
+      <h2 class="text-svet">УСЛУГИ</h2>
+      <ul>
+        <li>Создание авторских постов для Telegram-каналов</li>
+        <li>Креативные и нативные рекламные интеграции</li>
+        <li>Тексты под задачи: вовлечение, продажи, стиль</li>
+        <li>Редактура и помощь с формулировками</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="text-svet">ПОРТФОЛИО</h2>
+      <div class="text-container">
+        <p class="center-text">
+          <span class="text-large">Постарался выделить самые показательные посты в моей практике.</span><br>
+          <span class="text-small">(кликните, чтобы увидеть только текст)</span>
+        </p>
+      </div>
+      <div class="carousel-wrapper">
+        <button class="carousel-btn prev">←</button>
+        
+        <div class="carousel">
+          <div class="carousel-track">
+            <div class="post">
+              <img src="портфолио2.png" alt="Пример поста 1" onclick="openModal('портфолио2111.png',  'https://t.me/WotPUB/13380')">
+            </div>
+            <div class="post">
+              <img src="портфолио13.png" alt="Пример поста 2" onclick="openModal('портфолио13111.png', 'https://t.me/WotPUB/13420')">
+            </div>
+          </div>
+        </div>
+        
+    
+        <button class="carousel-btn next">→</button>
+      </div>
+    </div>
+    
+
+    <div class="section contact">
+      <h2 class="text-svet">Контакты</h2>
+      <p>📩 <a href="mailto:lnxtc1701@gmail.com">Написать на почту</a></p>
+      <p>💬 Telegram: <a href="https://t.me/mbilladmin" target="_blank">@mbilladmin</a></p>
+    </div>
+  </div>
+
+  <script>
+    const track = document.querySelector('.carousel-track');
+    const posts = document.querySelectorAll('.carousel .post');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+  
+    let currentIndex = 0;
+  
+    function updateCarousel() {
+      const offset = -currentIndex * 100;
+      track.style.transform = `translateX(${offset}%)`;
+    }
+  
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < posts.length - 1) {
+        currentIndex++;
+        updateCarousel();
+      }
+    });
+  
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+  
+    updateCarousel(); // начальная инициализация
+
+    // Функции для модального окна
+  function openModal(imgElement, link) {
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalLink = document.getElementById('modal-link');
+
+    modal.style.display = 'flex';
+    modalImg.src = imgElement.src;
+    modalLink.href = link;
+  }
+
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+  }
+
+  function openModal(imageSrc, link) {
+  const modal = document.getElementById('modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalLink = document.getElementById('modal-link');
+
+  modal.style.display = 'flex';
+  modalImg.src = imageSrc;  // Задаем путь к картинке для модалки
+  modalLink.href = link;    // Ссылка на пост
+}
+
+
+  
+  </script>
+  
+  <!-- Модальное окно -->
+<div id="modal" class="modal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <img id="modal-img" src="" alt="Полный пост">
+
+    <div class="modal-buttons">
+      <a id="modal-link" href="#" target="_blank">Перейти к посту</a>
+      <a href="https://t.me/mbilladmin" target="_blank">Заказать пост</a>
+    </div>
+
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+  </div>
+</div>
+
+</body>
+</html>
+
+git remote add origin https://github.com/lnxtc/lnxtc.git
+git branch -M main
+git push -u origin main
